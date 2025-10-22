@@ -1,0 +1,932 @@
+/* mell.css — тёмная тема, apple-like font */
+:root{
+  --bg:#0f1113;
+  --panel:#0b0c0d;
+  --muted:#b7bcc2;
+  --accent:#bfc6cc;
+  --glass: rgba(255,255,255,0.04);
+  --max-width:1200px;
+}
+
+/* Шрифт system (похож на SF) */
+html,body{
+  height:100%;
+  margin:0;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: var(--bg);
+  color: #fff;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+/* Side backgrounds для широких экранов */
+.bg-left, .bg-right{
+  position:fixed; top:0; bottom:0; width:calc((100vw - var(--max-width))/2);
+  background: linear-gradient(180deg, #0a0b0c 0%, #0b0d0f 100%);
+  z-index:0;
+}
+.bg-left{ left:0; display:none; }
+.bg-right{ right:0; display:none; }
+@media (min-width: calc(var(--max-width) + 80px)) {
+  .bg-left, .bg-right { display:block; }
+}
+
+/* Центрированный контейнер */
+.site-wrapper{
+  position:relative;
+  max-width:var(--max-width);
+  margin: 36px auto;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+  z-index:1;
+}
+
+/* Header */
+.site-header{
+  position: sticky;
+  top:0;
+  backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(11,12,13,0.55), rgba(11,12,13,0.35));
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  z-index:40;
+}
+.header-inner{
+  display:flex;
+  align-items:center;
+  gap:20px;
+  padding:14px 20px;
+}
+
+/* По умолчанию логотип слева, навигация справа */
+.logo-btn{
+  background:transparent;
+  border:0;
+  padding:0;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+}
+
+.logo-img{
+  height:42px;
+  width:auto;
+  display:block;
+  border-radius:8px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.6), inset 0 -2px 8px rgba(255,255,255,0.02);
+}
+
+/* Навигация справа */
+.site-nav{
+  margin-left:auto;
+  display:flex;
+  gap:20px;
+  align-items:center;
+}
+.site-nav .nav-link{
+  color:var(--accent);
+  text-decoration:none;
+  font-weight:600;
+  padding:8px 12px;
+  border-radius:8px;
+  transition: all .24s ease;
+}
+.site-nav .nav-link:hover,
+.site-nav .nav-link:focus{
+  background:var(--glass);
+  color:#fff;
+  transform: translateY(-2px);
+}
+
+/* Mobile: убираем nav и центрируем логотип */
+@media (max-width:900px){
+  .site-nav{ display:none; }
+  .header-inner{ justify-content:center; }
+  .logo-img{ height:46px; }
+}
+
+/* Main content spacing */
+main{ padding:36px; }
+
+/* Section base */
+.section{
+  padding:48px 0;
+  border-bottom:1px solid rgba(255,255,255,0.02);
+}
+
+/* About section layout — картинка слева, текст справа.
+   Ключевая правка: выравнивание по верху (flex-start) и корректный порядок на mobile */
+.about-section .section-inner{
+  display:flex;
+  gap:28px;
+  align-items:flex-start; /* чтобы текст выравнивался по верхней линии изображения */
+}
+.about-media{ flex: 0 0 360px; max-width:360px; }
+.about-img{
+  width:100%;
+  height:auto;
+  border-radius:12px;
+  object-fit:cover;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  border:1px solid rgba(255,255,255,0.03);
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s ease, border-color .28s ease;
+  will-change: transform, box-shadow;
+}
+
+/* Hover эффект: мягкая обводка и приближение (ненавязчиво) */
+.about-img:hover,
+.about-img:focus{
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 28px 60px rgba(0,0,0,0.65);
+  border-color: rgba(191,198,204,0.12);
+  outline: none;
+}
+
+/* Контент правее картинки */
+.about-content{ flex:1; min-width:0; }
+.section-title{
+  margin:0 0 12px 0;
+  font-size:28px;
+  color:#fff;
+  letter-spacing:-0.02em;
+}
+.lead{
+  color:var(--muted);
+  line-height:1.6;
+  font-size:14px;
+}
+
+/* Mobile: сначала текст, затем картинка (меняем порядок) */
+@media (max-width:900px){
+  .about-section .section-inner{ flex-direction:column-reverse; gap:20px; }
+  .about-media{ width:60%; max-width:420px; align-self:center; }
+  .about-img{ align-self:center; }
+}
+
+/* Reveal animation (для плавного появления) */
+.reveal { opacity:0; transform: translateY(16px); transition: all .7s cubic-bezier(.2,.9,.2,1); will-change:transform,opacity; }
+.reveal.visible { opacity:1; transform: translateY(0); }
+
+/* Footer */
+.site-footer{
+  padding:18px; text-align:center; color:var(--muted);
+}
+
+/* Placeholder sections */
+.placeholder{
+  min-height:220px;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--muted);
+  font-size:14px;
+}
+
+/* Accessibility focus */
+a:focus, button:focus { outline: 2px solid rgba(191,198,204,0.16); outline-offset:3px; border-radius:6px; }
+
+/* Доп: немного снижаем контраст ссылок на мобильных */
+@media (max-width:480px){
+  .section-title{ font-size:22px; }
+  main{ padding:24px; }
+}
+
+/* =========================
+   БЛОК "ШУМИХА"
+========================= */
+.noise-section{
+  text-align:center;
+}
+
+.noise-grid{
+  display:flex;
+  justify-content:center;
+  gap:28px;
+  margin-top:28px;
+  flex-wrap:wrap;
+}
+
+.noise-item{
+  background:rgba(255,255,255,0.02);
+  border-radius:14px;
+  overflow:hidden;
+  width:340px;
+  transition:transform .3s cubic-bezier(.2,.9,.2,1), box-shadow .3s ease;
+}
+
+.noise-item:hover{
+  transform:translateY(-8px) scale(1.02);
+  box-shadow:0 12px 36px rgba(0,0,0,0.45);
+}
+
+.noise-img-wrapper{
+  width:100%;
+  aspect-ratio:16/10;
+  overflow:hidden;
+}
+
+.noise-img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+  transition: transform .4s cubic-bezier(.2,.9,.2,1);
+}
+
+.noise-item:hover .noise-img{
+  transform:scale(1.06);
+}
+
+.noise-text{
+  padding:14px;
+  color:var(--muted);
+  font-size:15px;
+  font-weight:500;
+  letter-spacing:0.01em;
+}
+
+/* Адаптив: на телефонах карточки одна под другой */
+@media (max-width:800px){
+  .noise-grid{ flex-direction:column; align-items:center; gap:20px; }
+  .noise-item{ width:90%; max-width:400px; }
+}
+
+
+/* =========================
+   🎥 ВИДЕО-БЛОК "ЗАНОСЫ"
+========================= */
+.section-title {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.video-block.single video {
+  width: 100%;      /* растягивается по ширине родителя */
+  max-width: 720px; /* максимум 720px */
+  height: auto;     /* сохраняем пропорции */
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+  display: block;   /* чтобы центрирование работало */
+  margin: 0 auto;   /* центрируем видео */
+}
+
+.video-block.single video {
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+}
+
+.video-caption {
+  color: var(--accent);
+  font-size: 16px;
+  margin-top: 16px;
+  font-weight: 500;
+  position: relative;
+  padding-bottom: 28px;
+  text-align: center; /* добавляем */
+  margin-bottom: 0; /* чтобы не было двойного вертикального отступа */
+}
+
+.video-caption::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 2px;
+}
+
+
+
+/* =========================
+   🎰 СЛОТ МАШИНА (финальная версия)
+========================= */
+
+.slot-wrapper {
+  text-align: center;
+  margin-top: 28px;
+}
+
+.slot-subtitle {
+  color: var(--muted);
+  text-align: center;
+  font-size: 15px;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.slot-machine {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255,255,255,0.03);
+  padding: 22px 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  margin-bottom: 28px;
+  overflow: hidden;
+}
+
+.reel {
+  width: 120px;
+  height: 120px;
+  background: rgba(255,255,255,0.02);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 0 12px rgba(255,255,255,0.06);
+  position: relative;
+}
+
+.reel img {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.reel img.old {
+  animation: slideDown 0.6s ease forwards;
+}
+.reel img.new {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: slideIn 0.6s ease forwards;
+}
+@keyframes slideDown {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
+}
+@keyframes slideIn {
+  from { top: -100%; opacity: 0; }
+  to { top: 0; opacity: 1; }
+}
+
+.slot-btn {
+  display: block;
+  margin: 0 auto;
+  background: linear-gradient(135deg, #7f00ff, #9c27ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 14px 38px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.slot-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(127,0,255,0.45);
+}
+.slot-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slot-message {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 20px;
+  min-height: 28px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.slot-message {
+  text-decoration: none;
+  -webkit-text-decoration-skip: none;
+  text-decoration-skip-ink: none;
+}
+
+.slot-message.win {
+  color: #bfc6cc;
+  font-weight: 600;
+}
+
+
+.slot-message {
+  text-decoration: none !important;
+  text-shadow: none !important;
+  border-bottom: none !important;
+  outline: none !important;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.slot-message * {
+  text-decoration: none !important;
+  text-shadow: none !important;
+  border: none !important;
+}
+
+.about-section .section-title {
+  text-align: left;
+}
+
+
+.stats-section {
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-top: 40px;
+  margin-bottom: 60px;
+}
+
+.stat-item {
+  background: rgba(255,255,255,0.03);
+  padding: 24px 32px;
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  min-width: 180px;
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.stat-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.5);
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: #fff;
+}
+.stat-label {
+  color: var(--muted);
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.socials-title {
+  font-size: 22px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+
+.socials-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.social-btn {
+  background: linear-gradient(135deg, #7f00ff, #9c27ff);
+  border: none;
+  border-radius: 12px;
+  padding: 12px 26px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.social-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(127,0,255,0.45);
+}
+
+
+.lead strong {
+  color:var(--accent);
+  font-weight: 700;  
+}
+
+.link-inline {
+  color: #bfc6cc;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
+}
+
+.link-inline:hover {
+  color: #fff;
+  text-shadow: 0 0 8px rgba(191,198,204,0.6);
+}
+
+.site-footer {
+  position: relative;
+  background: rgba(15, 17, 19, 0.9); /* тёмный фон футера */
+  color: #fff;
+  padding: 30px 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 60px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  overflow: hidden;
+}
+
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: -120px; /* насколько “вверх” поднимается растяжка */
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    rgba(15,17,19,0.95) 60%,
+    rgba(15,17,19,0.9) 100%
+  );
+  z-index: 0;
+  pointer-events: none;
+}
+
+.footer-inner {
+  position: relative;
+  z-index: 1; /* чтобы текст не попал под градиент */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.footer-logo-img {
+  height: 36px;
+  width: auto;
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.footer-copy {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  font-size: 18px;
+  color: #fff;
+  text-decoration: none; /* чтобы убрать подчёркивание */
+  transition: opacity 0.55s ease;
+}
+
+.footer-logo:hover {
+  opacity: 0.7; /* лёгкий эффект при наведении */
+}
+
+
+
+
+#footer {
+  text-align: center;
+  padding: 36px 0; /* было 60px — делаем компактнее */
+  opacity: 0.7;
+  font-size: 14px;
+  margin-top: 40px; /* если футер слишком близко к предыдущему блоку — оставляем лёгкий отступ */
+}
+
+
+
+
+#game {
+  margin-top: -28px; /* такое же расстояние, как от картинок до линии */
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 600px) {
+  .video-block.single video {
+    width: 90%; /* занимает всю ширину экрана */
+    max-width: 90%;
+  }
+}
+
+.logo-btn {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: opacity 0.3s ease; /* плавный переход */
+}
+
+.logo-btn:hover {
+  opacity: 0.65; /* при наведении становится немного прозрачной */
+}
+
+
+
+
+
+
+/* ====== 📱 МОБИЛЬНЫЙ АДАПТИВ ====== */
+@media (max-width: 900px) {
+  /* логотип — немного больше на телефонах */
+  .logo-img {
+    height: 60px; /* было 46px */
+  }
+
+  /* заголовок "О Mellstroy" по центру */
+  #about .section-title {
+    text-align: center;
+  }
+}
+
+@media (max-width: 900px) {
+  /* уменьшить отступ после фото в секции "О нём" */
+  #about {
+    padding-bottom: 20px; /* вместо 48px */
+  }
+
+  /* чуть уменьшить верхний отступ у секции "Шумиха" */
+  #noise {
+    padding-top: 20px; /* вместо 48px */
+  }
+}
+
+
+
+
+/* ===== 📱 МОБИЛЬНЫЙ FIX ВЕРХА ===== */
+@media (max-width: 900px) {
+  /* убираем большой отступ сверху */
+  .site-wrapper {
+    margin-top: 5px !important;
+  }
+
+  /* логотип — по центру и чуть крупнее */
+  .logo-img {
+    height: 54px !important;
+    display: block;
+    margin: 0 auto;
+  }
+
+  /* заголовок "О Mellstroy" — по центру и ближе к лого */
+  #about .section-title {
+    text-align: center;
+    margin-top: 8px !important;
+  }
+
+  /* убираем тёмный верхний фон-блок */
+  .bg-left,
+  .bg-right {
+    display: none !important;
+  }
+}
+
+
+
+
+/* ===== 📱 ВЫРАВНИВАЕМ ОТСТУПЫ ВОКРУГ ЛИНИИ ===== */
+@media (max-width: 900px) {
+    header.site-header {
+    margin-bottom: 2px; /* одинаковый отступ вниз после шапки */
+  }
+
+  #about .section-title {
+    margin-top: 0;       /* убираем лишний отступ сверху */
+    margin-bottom: 20px; /* расстояние до первого параграфа */
+  }
+
+  #about .lead:first-of-type {
+    margin-top: 0; /* чтобы текст не отъезжал вниз лишне */
+  }
+  
+
+
+
+  /* если линия — это hr */
+  hr {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* если разделение идёт через класс, например .divider или .line */
+  .divider,
+  .line {
+    margin-top: 16px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* выравниваем текст под видео */
+  .video-caption {
+    text-align: center;
+    margin-bottom: 12px; /* расстояние до линии сверху */
+  }
+
+  /* выравниваем заголовок под линией */
+  #game .section-title {
+    text-align: center;
+    margin-top: 16px; /* одинаково как сверху */
+  }
+
+
+  
+
+  /* === Уменьшаем расстояние от логотипа до секции "О Mellstroy" на мобильных === */
+.header-logo {
+  margin-top: 10px;     /* чуть поднимаем логотип */
+  margin-bottom: 0;     
+  display: block;
+}
+
+header,
+.header-wrapper {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+  gap: 0 !important; /* если используется flex или grid */
+}
+
+.header-logo {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+#about {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+
+
+
+}
+
+
+
+
+
+
+/* === ВЫРАВНИВАЕМ ОТСТУПЫ ВОКРУГ ЛИНИИ === */
+
+/* От "Испытай удачу!" до линии — 28px */
+.slot-message {
+  margin-bottom: -20px; /* расстояние от "Испытай удачу!" до линии */
+}
+
+/* От линии до блока "Статистика & СоцСети" — тоже 28px */
+#stats {
+  margin-top: -20px; /* расстояние от линии под Game до следующего блока */
+}
+
+#stats {
+  border-bottom: none !important;
+}
+
+
+
+
+/* --- Поднимаем футер ближе к блоку "Статистика & СоцСети" --- */
+#stats {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+footer,
+.site-footer {
+  margin-top: 30px !important;  /* можешь уменьшить до 0 или 8px, если хочешь вплотную */
+  padding-top: 20px !important;
+}
+
+
+/* Поднимаем заголовок "О Mellstroy" ближе к хедеру */
+#about {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+#about .section-inner {
+  margin-top: -10px; /* поднимаем весь блок на 1px */
+}
+
+#about .section-title {
+  margin-top: 0 !important; /* убираем отступы самого заголовка */
+}
+
+
+
+/* === 📱 ВЫРАВНИВАЕМ ОТСТУПЫ МЕЖДУ IMG1 И "ГЛАВНАЯ ШУМИХА" === */
+@media (max-width: 900px) {
+  /* отступ снизу у секции #about (под img1.jpg) */
+  #about {
+    padding-bottom: 28px !important;
+  }
+
+  /* отступ сверху у секции #noise (над "Главная Шумиха") */
+  #noise {
+    padding-top: 28px !important;
+  }
+
+  /* если между ними идёт hr или border, не даём дополнительного зазора */
+  hr {
+    margin: 0 !important;
+  }
+}
+
+
+/* === 🎥 YouTube превью вместо видео === */
+.video-link {
+  display: block;
+  position: relative;
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.video-link:hover {
+  transform: scale(1.02);
+  box-shadow: 0 14px 40px rgba(0,0,0,0.7);
+}
+
+.video-preview {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+}
+
+
+
+
+
+/* Полупрозрачный Play-оверлей по центру */
+.play-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0; /* убираем влияние шрифта */
+  color: rgba(255,255,255,0.9);
+  background: rgba(0,0,0,0.35);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.play-overlay::before {
+  content: '▶';
+  font-size: 40px;
+  line-height: 1;
+  color: rgba(255,255,255,0.95);
+  display: block;
+  transform: translateX(2px); /* лёгкое смещение, чтобы треугольник казался ровно по центру */
+}
+
+.video-link:hover .play-overlay {
+  background: rgba(0,0,0,0.5);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* адаптив */
+@media (max-width: 600px) {
+  .play-overlay {
+    width: 40px;
+    height: 40px;
+  }
+  .play-overlay::before {
+    font-size: 20px;
+    transform: translateX(1.5px);
+  }
+}
+
+
+
+
+/* === 🖥️ Отступ между хедером и первым блоком (только ПК) === */
+@media (min-width: 901px) {
+  main {
+    padding-top: 70px; /* было 36px по умолчанию */
+  }
+}
