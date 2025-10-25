@@ -933,12 +933,12 @@ footer,
 
 @media (max-width: 900px) {
   #about {
-    padding-bottom: 28px !important; /* раньше было ~28px, уменьшаем */
+    padding-bottom: 8px !important; /* раньше было ~28px, уменьшаем */
     margin-bottom: 0 !important;
   }
 
   #noise {
-    padding-top: 28px !important; /* раньше было ~28px, уменьшаем */
+    padding-top: 56px !important; /* раньше было ~28px, уменьшаем */
     margin-top: 0 !important;
   }
 }
