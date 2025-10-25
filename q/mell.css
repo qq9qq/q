@@ -941,4 +941,8 @@ footer,
     padding-top: 56px !important; /* раньше было ~28px, уменьшаем */
     margin-top: 0 !important;
   }
+
+  .section-title {
+     padding-top: 28px;
+  }
 }
