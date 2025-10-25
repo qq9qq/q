@@ -940,9 +940,10 @@ footer,
   #noise {
     padding-top: 56px !important; /* раньше было ~28px, уменьшаем */
     margin-top: 0 !important;
+    padding-top: 28px;
   }
 
   .section-inner {
-     padding-top: 28px;
+     padding-top: 28px !important;
   }
 }
