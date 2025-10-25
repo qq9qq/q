@@ -122,7 +122,7 @@ main{ padding:36px; }
   gap:28px;
   align-items:flex-start; /* чтобы текст выравнивался по верхней линии изображения */
 }
-.about-media{ flex: 0 0 210px; max-width:360px; padding-bottom: 28px; }
+.about-media{ flex: 0 0 150px; max-width:360px; padding-bottom: 28px; }
 .about-img{
   width:100%;
   height:auto;
